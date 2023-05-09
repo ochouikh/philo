@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/20 01:10:57 by ochouikh          #+#    #+#              #
-#    Updated: 2023/05/07 18:47:13 by ochouikh         ###   ########.fr        #
+#    Created: 2023/05/08 16:49:05 by ochouikh          #+#    #+#              #
+#    Updated: 2023/05/08 16:49:07 by ochouikh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 
-SRC = manda/main.c \
-	manda/utils.c
+SRC = philo_bonus.c \
+	utils_bonus.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -22,10 +22,10 @@ FLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBFT_OBJ) $(OBJ)
-	cc $(FLAGS) -g $(LIBFT) $(OBJ) -o $(NAME)
+	cc $(FLAGS) $(LIBFT) $(OBJ) -o $(NAME)
 
-manda/%.o: manda/%.c manda/philo.h
-	cc $(FLAGS) -g -c $< -o $@
+%.o: %.c philo_bonus.h
+	cc $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

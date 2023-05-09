@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 01:16:30 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/07 18:48:41 by ochouikh         ###   ########.fr       */
+/*   Created: 2023/05/08 16:48:53 by ochouikh          #+#    #+#             */
+/*   Updated: 2023/05/09 17:50:31 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 typedef struct s_philo
 {
 	int				philo_number;
-	pthread_mutex_t	mutex_last_meal;
-	pthread_mutex_t	mutex_times_to_eat;
 	long long		last_meal;
 	int				times_to_eat;
 	struct s_data	*data;
@@ -31,8 +30,8 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pthread_t		*t;
-	pthread_mutex_t	*fork;
+	pid_t			*process;
+	sem_t			*fork;
 	int				num_of_philos;
 	int				time_to_die;
 	int				time_to_eat;
