@@ -6,14 +6,18 @@
 #    By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/08 16:49:05 by ochouikh          #+#    #+#              #
-#    Updated: 2023/05/08 16:49:07 by ochouikh         ###   ########.fr        #
+#    Updated: 2023/05/12 17:47:41 by ochouikh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_bonus
 
 SRC = philo_bonus.c \
-	utils_bonus.c
+	routine_bonus.c \
+	philo_infos.c \
+	utils_bonus_1.c \
+	utils_bonus_2.c \
+	ft_itoa.c
 
 OBJ = $(SRC:.c=.o)
 

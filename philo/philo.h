@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:16:30 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/08 21:44:08 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/12 15:08:30 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ typedef struct s_data
 	struct s_philo	*philos;
 }				t_data;
 
-int		ft_atoi(const char *str);
-int		ft_strlen(char *str);
+int			ft_atoi(const char *str);
+void		*routine(void *arg);
+long long	current_time(void);
+void		my_usleep(long long time_to_sleep);
+int			parse_and_initialize(t_data *data, char **argv);
 
 #endif

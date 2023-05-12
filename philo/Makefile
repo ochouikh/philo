@@ -6,18 +6,19 @@
 #    By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 01:10:57 by ochouikh          #+#    #+#              #
-#    Updated: 2023/05/09 16:25:40 by ochouikh         ###   ########.fr        #
+#    Updated: 2023/05/12 14:57:07 by ochouikh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 SRC = philo.c \
+	routine.c \
 	utils.c
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
