@@ -6,11 +6,35 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:57:50 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 14:59:14 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:26:35 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	check_die_and_eat_times(t_data *data)
+{
+	int		i;
+	int		j;
+
+	while (1)
+	{
+		j = 0;
+		i = -1;
+		while (++i < data->num_of_philos)
+		{
+			usleep(10);
+			if (check_die(data, i))
+				return (1);
+			if (data->five_arg && check_times_to_eat(data, i))
+				j++;
+		}
+		if (j == data->num_of_philos)
+			break ;
+		usleep(900);
+	}
+	return (0);
+}
 
 static void	take_forks(t_data *data, t_philo *philo, int right, int left)
 {

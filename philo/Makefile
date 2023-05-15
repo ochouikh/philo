@@ -6,7 +6,7 @@
 #    By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 01:10:57 by ochouikh          #+#    #+#              #
-#    Updated: 2023/05/12 14:57:07 by ochouikh         ###   ########.fr        #
+#    Updated: 2023/05/15 15:33:52 by ochouikh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = philo
 
 SRC = philo.c \
 	routine.c \
-	utils.c
+	utils_1.c \
+	utils_2.c
 
 OBJ = $(SRC:.c=.o)
 

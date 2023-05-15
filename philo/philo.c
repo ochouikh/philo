@@ -6,13 +6,13 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:57:44 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 15:07:26 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:42:35 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	initialize_mutexs(t_data *data)
+static void	initialize_mutexs(t_data *data)
 {
 	int	i;
 
@@ -25,14 +25,14 @@ void	initialize_mutexs(t_data *data)
 	pthread_mutex_init(&data->mutex_print, NULL);
 }
 
-void	initialize_and_create_philo(t_data *data)
+static void	initialize_and_create_philo(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		usleep(10);
+		usleep(100);
 		data->philos[i].times_to_eat = 0;
 		data->philos[i].philo_number = i + 1;
 		data->philos[i].last_meal = current_time();
@@ -63,7 +63,7 @@ int	check_die(t_data *data, int i)
 int	check_times_to_eat(t_data *data, int i)
 {
 	pthread_mutex_lock(&data->philos[i].mutex_times_to_eat);
-	if (data->philos[i].times_to_eat == data->number_of_times_to_eat)
+	if (data->philos[i].times_to_eat >= data->number_of_times_to_eat)
 	{
 		pthread_mutex_unlock(&data->philos[i].mutex_times_to_eat);
 		return (1);
@@ -75,27 +75,17 @@ int	check_times_to_eat(t_data *data, int i)
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
-	int		i;
 
 	if (argc != 5 && argc != 6)
 		return (printf("invalid arguments\n"), 1);
 	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (printf("malloc() fail\n"), 1);
 	if (parse_and_initialize(data, argv))
 		return (1);
 	initialize_mutexs(data);
 	initialize_and_create_philo(data);
-	while (1)
-	{
-		usleep(10);
-		i = -1;
-		while (++i < data->num_of_philos)
-		{
-			if (check_die(data, i))
-				return (1);
-			if (data->five_arg)
-				if (check_times_to_eat(data, i))
-					return (0);
-		}
-	}
+	if (check_die_and_eat_times(data))
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 17:06:48 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 17:51:38 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:32:03 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ int	parse_and_initialize(t_data *data, char **argv)
 		return (printf("invalid digits\n"), 1);
 	data->first_time = current_time();
 	data->philos = (t_philo *)malloc(data->num_of_philos * sizeof(t_philo));
+	if (!data->philos)
+		return (printf("malloc() fail\n"), 1);
 	data->process = (pid_t *)malloc(data->num_of_philos * sizeof(pid_t));
+	if (!data->process)
+		return (printf("malloc() fail\n"), 1);
 	return (0);
 }

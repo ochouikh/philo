@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 01:16:30 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 15:08:30 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/13 14:48:08 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ void		*routine(void *arg);
 long long	current_time(void);
 void		my_usleep(long long time_to_sleep);
 int			parse_and_initialize(t_data *data, char **argv);
+int			check_die(t_data *data, int i);
+int			check_times_to_eat(t_data *data, int i);
+int			check_die_and_eat_times(t_data *data);
 
 #endif

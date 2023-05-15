@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 17:43:38 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 17:53:30 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:26:52 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 void	create_philo(t_data *data, int i)
 {
 	data->process[i] = fork();
+	if (data->process[i] == -1)
+	{
+		printf("fork() fail\n");
+		exit(EXIT_FAILURE);
+	}
 	if (data->process[i] == 0)
 	{
-		usleep(10);
 		pthread_create(&data->philos[i].t, NULL, &routine, &data->philos[i]);
 		pthread_detach(data->philos[i].t);
 		while (1)
@@ -25,6 +29,7 @@ void	create_philo(t_data *data, int i)
 			check_die(data, i);
 			if (data->five_arg)
 				check_times_to_eat(data, i);
+			usleep(1500);
 		}
 	}
 }
@@ -37,6 +42,8 @@ int	main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 		return (printf("invalid arguments\n"), 1);
 	data = malloc(sizeof(t_data));
+	if (!data)
+		return (printf("malloc() fail\n"), 1);
 	if (parse_and_initialize(data, argv))
 		return (1);
 	initialize_semaphores(data);
@@ -47,6 +54,7 @@ int	main(int argc, char *argv[])
 		create_philo(data, i);
 		i++;
 	}
-	while (waitpid(0, NULL, 0) != -1);
+	while (waitpid(0, NULL, 0) != -1)
+		;
 	return (0);
 }
