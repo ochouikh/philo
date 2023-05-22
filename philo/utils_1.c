@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:57:52 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/15 15:33:37 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:32:37 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	my_usleep(long long time_to_sleep)
 		usleep(10);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	result;
-	int	signe;
-	int	i;
+	long	result;
+	long	signe;
+	long	i;
 
 	result = 0;
 	signe = 1;

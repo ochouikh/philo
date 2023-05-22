@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 17:43:38 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/15 16:26:52 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 21:16:36 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	create_philo(t_data *data, int i)
 	}
 	if (data->process[i] == 0)
 	{
-		pthread_create(&data->philos[i].t, NULL, &routine, &data->philos[i]);
-		pthread_detach(data->philos[i].t);
+		if (pthread_create(&data->philos[i].t, NULL, &routine, \
+		&data->philos[i]) != 0)
+			kill(0, SIGINT);
+		if (pthread_detach(data->philos[i].t) != 0)
+			kill(0, SIGINT);
 		while (1)
 		{
 			check_die(data, i);
@@ -46,8 +49,10 @@ int	main(int argc, char *argv[])
 		return (printf("malloc() fail\n"), 1);
 	if (parse_and_initialize(data, argv))
 		return (1);
-	initialize_semaphores(data);
-	initialize_philo_infos(data);
+	if (initialize_semaphores(data))
+		return (1);
+	if (initialize_philo_infos(data))
+		return (1);
 	i = 0;
 	while (i < data->num_of_philos)
 	{

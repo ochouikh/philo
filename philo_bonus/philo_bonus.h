@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 16:48:53 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 17:43:55 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 21:19:50 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ typedef struct s_data
 	struct s_philo	*philos;
 }				t_data;
 
-int			ft_atoi(const char *str);
+long		ft_atoi(const char *str);
 long long	current_time(void);
 void		my_usleep(long long time_to_sleep);
 int			ft_strlen(char *str);
 char		*ft_itoa(int n);
 char		*ft_strjoin(char *s1, char *s2);
 int			parse_and_initialize(t_data *data, char **argv);
-void		initialize_semaphores(t_data *data);
-void		initialize_philo_infos(t_data *data);
+int			initialize_semaphores(t_data *data);
+int			initialize_philo_infos(t_data *data);
 void		check_die(t_data *data, int i);
 void		check_times_to_eat(t_data *data, int i);
 void		*routine(void *arg);

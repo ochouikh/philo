@@ -6,7 +6,7 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 15:08:15 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/12 17:07:52 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:56:06 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
-	int	result;
-	int	signe;
-	int	i;
+	long	result;
+	long	signe;
+	long	i;
 
 	result = 0;
 	signe = 1;

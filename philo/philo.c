@@ -6,26 +6,29 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 14:57:44 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/15 15:42:35 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:28:15 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	initialize_mutexs(t_data *data)
+static int	initialize_mutexs(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		pthread_mutex_init(&data->fork[i], NULL);
+		if (pthread_mutex_init(&data->fork[i], NULL) != 0)
+			return (printf("pthread_mutex_init() fail\n"), 1);
 		i++;
 	}
-	pthread_mutex_init(&data->mutex_print, NULL);
+	if (pthread_mutex_init(&data->mutex_print, NULL) != 0)
+		return (printf("pthread_mutex_init() fail\n"), 1);
+	return (0);
 }
 
-static void	initialize_and_create_philo(t_data *data)
+static int	initialize_and_create_philo(t_data *data)
 {
 	int	i;
 
@@ -36,13 +39,20 @@ static void	initialize_and_create_philo(t_data *data)
 		data->philos[i].times_to_eat = 0;
 		data->philos[i].philo_number = i + 1;
 		data->philos[i].last_meal = current_time();
+		if (data->philos[i].last_meal == -1)
+			return (printf("gettimeofday() fail\n"), 1);
 		data->philos[i].data = data;
-		pthread_mutex_init(&data->philos[i].mutex_times_to_eat, NULL);
-		pthread_mutex_init(&data->philos[i].mutex_last_meal, NULL);
-		pthread_create(&data->t[i], NULL, &routine, &data->philos[i]);
-		pthread_detach(data->t[i]);
+		if (pthread_mutex_init(&data->philos[i].mutex_times_to_eat, NULL) != 0)
+			return (printf("pthread_mutex_init() fail\n"), 1);
+		if (pthread_mutex_init(&data->philos[i].mutex_last_meal, NULL) != 0)
+			return (printf("pthread_mutex_init() fail\n"), 1);
+		if (pthread_create(&data->t[i], NULL, &routine, &data->philos[i]) != 0)
+			return (printf("pthread_create() fail\n"), 1);
+		if (pthread_detach(data->t[i]) != 0)
+			return (printf("pthread_detach() fail\n"), 1);
 		i++;
 	}
+	return (0);
 }
 
 int	check_die(t_data *data, int i)
@@ -83,8 +93,10 @@ int	main(int argc, char *argv[])
 		return (printf("malloc() fail\n"), 1);
 	if (parse_and_initialize(data, argv))
 		return (1);
-	initialize_mutexs(data);
-	initialize_and_create_philo(data);
+	if (initialize_mutexs(data))
+		return (1);
+	if (initialize_and_create_philo(data))
+		return (1);
 	if (check_die_and_eat_times(data))
 		return (1);
 	return (0);

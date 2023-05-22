@@ -6,28 +6,33 @@
 /*   By: ochouikh <ochouikh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 17:16:42 by ochouikh          #+#    #+#             */
-/*   Updated: 2023/05/15 16:28:33 by ochouikh         ###   ########.fr       */
+/*   Updated: 2023/05/22 21:19:32 by ochouikh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	initialize_semaphores(t_data *data)
+int	initialize_semaphores(t_data *data)
 {
 	sem_unlink("/forks");
-	data->fork = sem_open("/forks", O_CREAT | O_EXCL, \
+	data->fork = sem_open("/forks", O_CREAT, \
 	0666, data->num_of_philos);
+	if (data->fork == SEM_FAILED)
+		return (printf("sem_open() fail\n"), 1);
 	sem_unlink("/print");
-	data->sem_print = sem_open("/print", O_CREAT | O_EXCL, 0666, 1);
+	data->sem_print = sem_open("/print", O_CREAT, 0666, 1);
+	if (data->sem_print == SEM_FAILED)
+		return (printf("sem_open() fail\n"), 1);
+	return (0);
 }
 
-void	initialize_philo_infos(t_data *data)
+int	initialize_philo_infos(t_data *data)
 {
 	int		i;
 	char	*num;
 
-	i = 0;
-	while (i < data->num_of_philos)
+	i = -1;
+	while (++i < data->num_of_philos)
 	{
 		data->philos[i].philo_number = i + 1;
 		data->philos[i].data = data;
@@ -37,14 +42,17 @@ void	initialize_philo_infos(t_data *data)
 		data->philos[i].str_last_meal = ft_strjoin("/last_meal", num);
 		sem_unlink(data->philos[i].str_last_meal);
 		data->philos[i].sem_last_meal = \
-		sem_open(data->philos[i].str_last_meal, O_CREAT | O_EXCL, 0666, 1);
+		sem_open(data->philos[i].str_last_meal, O_CREAT, 0666, 1);
 		data->philos[i].str_times_to_eat = ft_strjoin("/times_to_eat", num);
 		sem_unlink(data->philos[i].str_times_to_eat);
 		data->philos[i].sem_times_to_eat = \
-		sem_open(data->philos[i].str_times_to_eat, O_CREAT | O_EXCL, 0666, 1);
+		sem_open(data->philos[i].str_times_to_eat, O_CREAT, 0666, 1);
+		if ((data->philos[i].sem_times_to_eat == SEM_FAILED)
+			|| (data->philos[i].sem_last_meal == SEM_FAILED))
+			return (printf("sem_open() fail\n"), 1);
 		free(num);
-		i++;
 	}
+	return (0);
 }
 
 void	check_die(t_data *data, int i)
